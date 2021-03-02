@@ -85,9 +85,9 @@ class AwinSource {
               ...product
             })
           })
-          .on('end', async (e) => {
-            console.log("end")
-          })
+          // .on('end', async (e) => {
+          //   console.log("end")
+          // })
       })
       .catch(console.error)
   }
