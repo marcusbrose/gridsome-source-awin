@@ -18,7 +18,7 @@ class AwinSource {
     this.feeds = feeds
 
     api.loadSource(async ({ addCollection, addSchemaTypes }) => {
-      await this.loadCollections(addCollection, addSchemaTypes)
+      return await this.loadCollections(addCollection, addSchemaTypes)
     })
   }
 
@@ -66,31 +66,36 @@ class AwinSource {
       'format/csv/delimiter/%2C/compression/gzip/',
     ].join('')
 
-    axios({
-      method: 'get',
-      url,
-      responseType: 'stream',
-      options: { headers: { 'Accept-Encoding': 'gzip,deflate' } },
-    })
-      .then(response => {
-        let csvStream = csv.createStream({ ...csvOptions, columns })
-        response.data
-          .pipe(zlib.createGunzip())
-          .pipe(csvStream)
-          .on('error', (err) => {
-            console.error(err)
-          })
-          .on('data', (product) => {
-            console.log({product})
-            products.addNode({
-              ...product
-            })
-          })
-          // .on('end', async (e) => {
-          //   console.log("end")
-          // })
+    return await new Promise((resolve, reject) => {
+      axios({
+        method: 'get',
+        url,
+        responseType: 'stream',
+        options: { headers: { 'Accept-Encoding': 'gzip,deflate' } },
       })
-      .catch(console.error)
+        .then(response => {
+          let csvStream = csv.createStream({ ...csvOptions, columns })
+          response.data
+            .pipe(zlib.createGunzip())
+            .pipe(csvStream)
+            .on('error', (err) => {
+              console.error(err)
+              reject(error)
+            })
+            .on('data', (product) => {
+              products.addNode({
+                ...product
+              })
+            })
+            .on('end', () => {
+              resolve()
+            })
+        })
+        .catch(error => {
+          console.log(error)
+          reject(error)
+        })
+    })
   }
 }
 
