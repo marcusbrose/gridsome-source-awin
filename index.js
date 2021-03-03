@@ -81,6 +81,7 @@ class AwinSource {
             console.error(err)
           })
           .on('data', (product) => {
+            console.log({product})
             products.addNode({
               ...product
             })
