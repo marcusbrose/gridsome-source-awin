@@ -21,22 +21,28 @@ module.exports = {
     {
       use: 'gridsome-source-awin',
       options: {
-        apiKey: ...,
-        feeds: [{
-          typeName: ...,
-          language: 'de',
-          fid: ...,
-          columns: [
-            'aw_product_id',
-            'aw_deep_link',
-            'product_name',
-            'merchant_image_url',
-            'description',
-            'search_price',
-            'currency',
-          ]
-        }]
+        apiKey: 'YOUR_API_KEY',
+        columns: [
+          'aw_deep_link',
+          'product_name',
+          'aw_product_id',
+          'merchant_product_id',
+          'merchant_image_url',
+          'description',
+          'merchant_category',
+          'search_price',
+        ],
+        language: 'de', // optional, default de
+        adultcontent: '1', // optional, default 0
+        fids: [
+          // only the first fid is supportet now
+          '12345', 
+          // multiple fids coming soon
+          '12346', 
+          '12347',
+        ]
       }
     }
   ]
+}
 ```
