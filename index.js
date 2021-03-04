@@ -71,7 +71,7 @@ class AwinSource {
         options: { headers: { 'Accept-Encoding': 'gzip,deflate' } },
       })
         .then(response => {
-          let csvStream = csv.createStream({ ...csvOptions, columns })
+          let csvStream = csv.createStream({ ...csvOptions, columns: this.columns })
           response.data
             .pipe(zlib.createGunzip())
             .pipe(csvStream)
