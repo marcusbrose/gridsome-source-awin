@@ -35,9 +35,8 @@ module.exports = {
         language: 'de', // optional, default de
         adultcontent: '1', // optional, default 0
         fids: [
-          // only the first fid is supportet now
           '12345', 
-          // multiple fids coming soon
+          // multiple fids optinal
           '12346', 
           '12347',
         ]

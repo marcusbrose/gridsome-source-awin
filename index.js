@@ -37,7 +37,7 @@ class AwinSource {
   async loadCollections(addCollection, addSchemaTypes) {
 
     const typeName = 'AwinProduct'
-    const fid = this.fids[0]
+    const fid = this.fids.join(',')
 
     let schema = `
       type ${typeName} implements Node {
